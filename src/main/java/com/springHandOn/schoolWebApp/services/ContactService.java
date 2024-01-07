@@ -2,16 +2,17 @@ package com.springHandOn.schoolWebApp.services;
 
 import com.springHandOn.schoolWebApp.Controller.ContactController;
 import com.springHandOn.schoolWebApp.model.Contact;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class ContactService {
-    Logger logger = LoggerFactory.getLogger(ContactService.class.getName());
+    //Logger log = LoggerFactory.getLogger(ContactService.class.getName());
     public boolean saveMessageDetails(Contact contact){
         boolean isSaved=true;
-        logger.info(contact.toString());
+        log.info(contact.toString());
         return isSaved;
     }
 }
