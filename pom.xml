@@ -36,6 +36,10 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -47,9 +51,14 @@
 					<image>
 						<builder>paketobuildpacks/builder-jammy-base:latest</builder>
 					</image>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
