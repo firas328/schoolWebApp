@@ -43,7 +43,7 @@ Author URL: http://w3layouts.com
             <h5 class="title-small">Eazy School</h5>
             <h3 class="title-style">Awesome Holidays</h3>
         </div>
-        <div class="row">
+        <div class="row" th:if="${festival}==true" >
             <div class="col-lg-6">
                 <h5 class="sub-title-timeline"><i class="fas fa-snowman"></i> Festival Holidays</h5>
                 <div class="timeline">
@@ -60,7 +60,7 @@ Author URL: http://w3layouts.com
                 </div>
             </div>
 
-            <div class="col-lg-6 mt-lg-0 mt-4">
+            <div class="col-lg-6 mt-lg-0 mt-4" th:if="${federal}==true">
                 <h5 class="sub-title-timeline"><i class="fas fa-flag-usa"></i> Federal Holidays </h5>
                 <div class="timeline">
                     <div th:each="holiday : ${FEDERAL}" class="column">
