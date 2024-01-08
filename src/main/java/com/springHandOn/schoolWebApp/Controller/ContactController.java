@@ -2,11 +2,15 @@ package com.springHandOn.schoolWebApp.Controller;
 
 import com.springHandOn.schoolWebApp.model.Contact;
 import com.springHandOn.schoolWebApp.services.ContactService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,13 +26,17 @@ public class ContactController {
         this.contactService=contactService;
     }
     @RequestMapping(path="/contact")
-    public String displayContactPage(){
+    public String displayContactPage(Model model){
+        model.addAttribute("contact",new Contact());
         return "contact.html";
     }
     @PostMapping(path="saveMsg")
-    public ModelAndView saveMessage(Contact contact){
-        log.info("saving");
+    public String  saveMessage(@Valid @ModelAttribute("contact") Contact contact, Errors error){
+        if (error.hasErrors()){
+            log.error("contact form submitting failed due to"+error.toString());
+            return "contact.html ";
+        }
         contactService.saveMessageDetails(contact);
-        return new ModelAndView("redirect:/contact");
+        return "redirect:/contact";
     }
 }
