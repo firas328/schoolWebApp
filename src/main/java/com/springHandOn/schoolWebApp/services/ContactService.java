@@ -1,21 +1,35 @@
 package com.springHandOn.schoolWebApp.services;
 
 import com.springHandOn.schoolWebApp.Controller.ContactController;
+import com.springHandOn.schoolWebApp.constant.ApplicationConstant;
 import com.springHandOn.schoolWebApp.model.Contact;
+import com.springHandOn.schoolWebApp.repository.ContactRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.context.annotation.SessionScope;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
-@RequestScope
+@SessionScope
 public class ContactService {
     //Logger log = LoggerFactory.getLogger(ContactService.class.getName());
+    @Autowired
+    private ContactRepository contactRepository;
     public boolean saveMessageDetails(Contact contact){
-        boolean isSaved=true;
-        log.info(contact.toString());
+        boolean isSaved=false;
+        contact.setCreated_at(String.valueOf(LocalDateTime.now()));
+        contact.setCreated_by(ApplicationConstant.ANANYMOUS);
+        contact.setStatus(ApplicationConstant.OPEN);
+        int i =contactRepository.saveMsg(contact);
+        if (i>0){
+            isSaved=true;
+        }
         return isSaved;
     }
 }
