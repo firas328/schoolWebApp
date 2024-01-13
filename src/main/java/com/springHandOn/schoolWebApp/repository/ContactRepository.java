@@ -1,6 +1,7 @@
 package com.springHandOn.schoolWebApp.repository;
 
 import com.springHandOn.schoolWebApp.RowMapper.ContactRowMapper;
+import com.springHandOn.schoolWebApp.constant.ApplicationConstant;
 import com.springHandOn.schoolWebApp.model.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ArgumentPreparedStatementSetter;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -36,5 +39,17 @@ public class ContactRepository {
             }
         }, new ContactRowMapper() );
 
+    }
+    public int updateMsgSatus(int id, String name){
+       String sql="Update CONTACT_MSG SET STATUS=? ,UPDATED_BY=?,UPDATED_AT=? WHERE CONTACT_ID=?";
+       return jdbcTemplate.update(sql, new PreparedStatementSetter() {
+           @Override
+           public void setValues(PreparedStatement ps) throws SQLException {
+               ps.setString(1, ApplicationConstant.CLOSE);
+               ps.setString(2, name);
+               ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+               ps.setInt(4,id);
+           }
+       });
     }
 }
