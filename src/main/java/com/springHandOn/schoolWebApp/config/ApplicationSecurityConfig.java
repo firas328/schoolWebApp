@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApplicationSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers(PathRequest.toH2Console()))
+        http.csrf((csrf) -> csrf.ignoringRequestMatchers("/saveMsg"))
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/displayMessages").hasRole("ADMIN")
                         .anyRequest().permitAll()
@@ -28,8 +28,8 @@ public class ApplicationSecurityConfig {
                 .logout(logoutConfigurer -> logoutConfigurer.logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true).permitAll())
                 .httpBasic(Customizer.withDefaults());
-        http.headers(headersConfigurer -> headersConfigurer
-                .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
+//        http.headers(headersConfigurer -> headersConfigurer
+//                .frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()));
 
         return http.build();}
     @Bean
